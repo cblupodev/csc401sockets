@@ -4,7 +4,7 @@ import java.util.*;
 
 // pay attention the instructions from section 4.2
 
-public class ClientEx1 {
+public class ClientEx0 {
 	
 	private Socket socket = null;
 	private String serverAddress = "152.1.13.219";
@@ -14,7 +14,7 @@ public class ClientEx1 {
 	// 3
 	private String clientPort = "6789";
 	
-	public ClientEx1(String clientAddress) {
+	public ClientEx0(String clientAddress) {
 		this.clientAddress = clientAddress;
 	}
 
@@ -48,7 +48,7 @@ public class ClientEx1 {
 	    	readLine[1] = in.readLine();
     		
     		// 5
-    		// Verify that the first word on the second line is “OK”, the value of usernum+1, and output the
+    		// Verify that the first word on the second line is "OK", the value of usernum+1, and output the
     		// received random number (servernum).
 		    if (readLine[1].contains("OK")) {
 		    	int usernum2 = Integer.parseInt(readLine[1].split(" ")[1]);
@@ -61,7 +61,7 @@ public class ClientEx1 {
 					
 					// 5, 6		    		
 			    	// Construct an ack string and write it to the socket (using send())
-		    		req = "ex1 " + usernum2 + " " + (servernum + 1);
+		    		req = "ex0 " + usernum2 + " " + (servernum + 1);
 		    		sop("<STEP3: Sending an ACK message to the server>:");
 		    		sop(req);
 		    		sop("");
@@ -88,7 +88,7 @@ public class ClientEx1 {
 				    } else {
 				    	sop("\nError   " + readLine[1]);
 				    }
-				// If the first word is not “OK”, print an error indication and the received string.
+				// If the first word is not "OK", print an error indication and the received string.
 		    	} else {
 		    		sop("\nError   usernum is not one value greater than the previous one");
 		    	}
@@ -107,7 +107,7 @@ public class ClientEx1 {
 	
 	public static void main(String[] args) {
 		// 3, address from the user
-		ClientEx1 c = new ClientEx1(args[0]);
+		ClientEx0 c = new ClientEx0(args[0]);
 		c.run();
 	}
 	
