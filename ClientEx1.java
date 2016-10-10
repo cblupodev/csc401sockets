@@ -35,14 +35,7 @@ public class ClientEx1 {
 		    
     		ServerSocket server = null;
 		    try {
-		    	sop(8);
 		    	server = new ServerSocket(ranport);
-		    	sop(9);
-	    	
-		    	// I need to call this now because I think it gets stuck if called later on
-		    	// something do with with it not having a listen() method probably
-				// Thread t = new Thread(new Accept(server));
-				// t.start(); // listen for new connections
 		    } catch (Exception se) { 
 		    	se.printStackTrace();
 		    } // ignore all ready bound exception
@@ -87,8 +80,6 @@ public class ClientEx1 {
 	    		sop("");
 	    		
 	    		newsock = server.accept();
-	    		
-	    		while(newsock == null); // busy wait until new connection
 	    		
 	    		// 8
 	    		// Call accept() on psock, if successful, this will return another socket (call it newsock) for
