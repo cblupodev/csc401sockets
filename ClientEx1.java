@@ -32,7 +32,7 @@ public class ClientEx1 {
 			PrintWriter out = new PrintWriter(psock.getOutputStream(), true); // the stream writer
 		    BufferedReader in = new BufferedReader(new InputStreamReader(psock.getInputStream())); // the stream reader
 		    
-		    
+		    // need to use a server socket object because the normal Socket objects can't accept connctions
     		ServerSocket server = null;
 		    try {
 		    	server = new ServerSocket(ranport);
