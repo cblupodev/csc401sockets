@@ -2,9 +2,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-// pay attention the instructions from section 3.2
+// pay attention the instructions from section 4.2
 
-public class ClientEx0 {
+public class ClientEx1 {
 	
 	private Socket socket = null;
 	private String serverAddress = "152.1.13.219";
@@ -14,7 +14,7 @@ public class ClientEx0 {
 	// 3
 	private String clientPort = "6789";
 	
-	public ClientEx0(String clientAddress) {
+	public ClientEx1(String clientAddress) {
 		this.clientAddress = clientAddress;
 	}
 
@@ -22,34 +22,34 @@ public class ClientEx0 {
 		try {
 		    
 		    // 1,2
+		    // Create a socket (of type SOCK_STREAM and family AF_INET) using socket()
 			socket = new Socket(serverAddress, serverPort);
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-		    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // the stream writer
+		    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // the stream reader
 		    
 		    // 3
+		    // Generate an integer from 20100 to 60000 randomly (usernum)
 		    Random rand = new Random();
 		    int usernum = rand.nextInt((60000 - 20100) + 1) + 20100;
 		    
 		    // 4
-		    // Write the client request string to the socket
+		    // Write the client request string to the socket (using send()).
 		    String req = "ex0 " + serverAddress+"-"+serverPort + " " + clientAddress+"-"+clientPort + " " + usernum + " " + " C.B.Lupo\n";
 		    sop("<STEP1: Sending the initial request to the server>:");
 		    sop(req);
-		    sop("");
-		    out.println(req);
-		    // out.printf(
-		    // 			"%s %s-%s %s-%s %d %s\n",
-		    //             "ex0", serverAddress, serverPort, clientAddress, clientPort, usernum, "C.B.Lupo"
-		    //           );
+		    sop(""); // write empty line
+		    out.println(req); // send the request 
+
 		    // 5
+		    // Read data from the socket (using recv()) until the second newline character is encountered
 		    String[] readLine = new String[2];
-		    
 		    // I'm hardcoding the array indexes because for whatever reason the while(in.ready()) isn't working right here
-		    try {
-		    	readLine[0] = in.readLine();
-		    	readLine[1] = in.readLine();
-		    } catch (Exception e) { } // ignore index out of bounds if that occurs
+	    	readLine[0] = in.readLine();
+	    	readLine[1] = in.readLine();
     		
+    		// 5
+    		// Verify that the first word on the second line is “OK”, the value of usernum+1, and output the
+    		// received random number (servernum).
 		    if (readLine[1].contains("OK")) {
 		    	int usernum2 = Integer.parseInt(readLine[1].split(" ")[1]);
 		    	int servernum = Integer.parseInt(readLine[1].split(" ")[3]);
@@ -61,7 +61,7 @@ public class ClientEx0 {
 					
 					// 5, 6		    		
 			    	// Construct an ack string and write it to the socket (using send())
-		    		req = "ex0 " + usernum2 + " " + (servernum + 1);
+		    		req = "ex1 " + usernum2 + " " + (servernum + 1);
 		    		sop("<STEP3: Sending an ACK message to the server>:");
 		    		sop(req);
 		    		sop("");
@@ -69,15 +69,12 @@ public class ClientEx0 {
 			        
 				    // 7
 				    // Read data from the socket (using recv()) until the newline character is encountered
-					try {
-						while(!in.ready());
-		    			readLine[0] = in.readLine();
-		    			readLine[1] = in.readLine();
-		    		} catch (Exception e) { } // ignore index out of bounds if that occurs
+	    			readLine[0] = in.readLine();
+	    			readLine[1] = in.readLine();
 			    	
 			    	// 8
 			    	// Verify that the string "OK" is received and output the received value of servernum+1. If not verified, print
-					// an error indication and the received string.
+					// an error indication and the received staticring.
 				    if (readLine[1].contains("OK")) {
 					    int servernum2 = Integer.parseInt(readLine[1].split(" ")[1]);
 			    		sop("<STEP4: Received the second ACK from the server>:");
@@ -91,6 +88,7 @@ public class ClientEx0 {
 				    } else {
 				    	sop("\nError   " + readLine[1]);
 				    }
+				// If the first word is not “OK”, print an error indication and the received string.
 		    	} else {
 		    		sop("\nError   usernum is not one value greater than the previous one");
 		    	}
@@ -99,6 +97,7 @@ public class ClientEx0 {
 		    	// 5
 		    	System.out.println("Error   " + readLine[1]); // error occured
 		    }
+		    socket.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -108,7 +107,7 @@ public class ClientEx0 {
 	
 	public static void main(String[] args) {
 		// 3, address from the user
-		ClientEx0 c = new ClientEx0(args[0]);
+		ClientEx1 c = new ClientEx1(args[0]);
 		c.run();
 	}
 	
