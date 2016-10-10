@@ -4,7 +4,7 @@ import java.util.*;
 
 // pay attention the instructions from section 4.2
 
-public class ClientEx0 {
+public class Ex0 {
 	
 	private Socket socket = null;
 	private String serverAddress = "152.1.13.219";
@@ -14,7 +14,7 @@ public class ClientEx0 {
 	// 3
 	private String clientPort = "6789";
 	
-	public ClientEx0(String clientAddress) {
+	public Ex0(String clientAddress) {
 		this.clientAddress = clientAddress;
 	}
 
@@ -107,7 +107,7 @@ public class ClientEx0 {
 	
 	public static void main(String[] args) {
 		// 3, address from the user
-		ClientEx0 c = new ClientEx0(args[0]);
+		Ex0 c = new Ex0(args[0]);
 		c.run();
 	}
 	
